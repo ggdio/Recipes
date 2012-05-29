@@ -1,0 +1,28 @@
+CREATE TABLE tbl_usuario(
+cod_usuario INT AUTO_INCREMENT,
+status BOOLEAN,
+nome VARCHAR(250),
+login VARCHAR(100),
+senha VARCHAR(100),
+PRIMARY KEY(cod_usuario));
+
+CREATE TABLE tbl_categoria_receita(
+cod_categoria INT AUTO_INCREMENT,
+nome VARCHAR(250),
+PRIMARY KEY(cod_categoria));
+
+CREATE TABLE tbl_receita(
+cod_receita INT AUTO_INCREMENT,
+cod_categoria INT,
+cod_usuario INT,
+status BOOLEAN,
+titulo VARCHAR(300),
+descricao VARCHAR(300),
+data DATE,
+ingredientes VARCHAR(1000),
+tempo INT,
+rendimento INT,
+preparo VARCHAR(1000),
+FOREIGN KEY(cod_categoria) REFERENCES tbl_categoria_receita(cod_categoria),
+FOREIGN KEY(cod_usuario) REFERENCES tbl_usuario(cod_usuario),
+PRIMARY KEY(cod_receita));
