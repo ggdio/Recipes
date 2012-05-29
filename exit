@@ -1,0 +1,68 @@
+[33mcommit 19ef95d77a7a7e3db47e2de4387fe1c55157db5f[m
+Author: Guilherme Dio <ggrdio@gmail.com>
+Date:   Mon May 28 21:23:38 2012 -0300
+
+    Adicionando os arquivos do projeto
+
+:000000 100644 0000000... 2aff59d... A	Projeto_Site/Receitas/.classpath
+:000000 100644 0000000... 897c3e0... A	Projeto_Site/Receitas/.project
+:000000 100644 0000000... 3a28de0... A	Projeto_Site/Receitas/.settings/.jsdtscope
+:000000 100644 0000000... f42de36... A	Projeto_Site/Receitas/.settings/org.eclipse.jdt.core.prefs
+:000000 100644 0000000... 5385fac... A	Projeto_Site/Receitas/.settings/org.eclipse.wst.common.component
+:000000 100644 0000000... 6f8fb94... A	Projeto_Site/Receitas/.settings/org.eclipse.wst.common.project.facet.core.xml
+:000000 100644 0000000... 3bd5d0a... A	Projeto_Site/Receitas/.settings/org.eclipse.wst.jsdt.ui.superType.container
+:000000 100644 0000000... 05bd71b... A	Projeto_Site/Receitas/.settings/org.eclipse.wst.jsdt.ui.superType.name
+:000000 100644 0000000... 254272e... A	Projeto_Site/Receitas/WebContent/META-INF/MANIFEST.MF
+:000000 100644 0000000... 7be3705... A	Projeto_Site/Receitas/WebContent/WEB-INF/jsp/index/index.jsp
+:000000 100644 0000000... 578b1a0... A	Projeto_Site/Receitas/WebContent/WEB-INF/lib/aopalliance-1.0.jar
+:000000 100644 0000000... c44d8de... A	Projeto_Site/Receitas/WebContent/WEB-INF/lib/jcl-over-slf4j-1.6.1.jar
+:000000 100644 0000000... 169a7a4... A	Projeto_Site/Receitas/WebContent/WEB-INF/lib/joda-time-2.0.jar
+:000000 100644 0000000... f09ef52... A	Projeto_Site/Receitas/WebContent/WEB-INF/lib/jstlapi.jar
+:000000 100644 0000000... 00a683e... A	Projeto_Site/Receitas/WebContent/WEB-INF/lib/jstlimpl.jar
+:000000 100644 0000000... 5429a90... A	Projeto_Site/Receitas/WebContent/WEB-INF/lib/log4j-1.2.16.jar
+:000000 100644 0000000... 026dc39... A	Projeto_Site/Receitas/WebContent/WEB-INF/lib/mysql-connector-java-5.1.17.jar
+:000000 100644 0000000... f1f4fdd... A	Projeto_Site/Receitas/WebContent/WEB-INF/lib/slf4j-api-1.6.1.jar
+:000000 100644 0000000... 6411599... A	Projeto_Site/Receitas/WebContent/WEB-INF/lib/slf4j-log4j12-1.6.1.jar
+:000000 100644 0000000... 37206d3... A	Projeto_Site/Receitas/WebContent/WEB-INF/lib/spring-aop-3.0.6.RELEASE.jar
+:000000 100644 0000000... be6a913... A	Projeto_Site/Receitas/WebContent/WEB-INF/lib/spring-asm-3.0.6.RELEASE.jar
+:000000 100644 0000000... c4bc850... A	Projeto_Site/Receitas/WebContent/WEB-INF/lib/spring-beans-3.0.6.RELEASE.jar
+:000000 100644 0000000... 57f7570... A	Projeto_Site/Receitas/WebContent/WEB-INF/lib/spring-context-3.0.6.RELEASE.jar
+:000000 100644 0000000... e957f85... A	Projeto_Site/Receitas/WebContent/WEB-INF/lib/spring-context-support-3.0.6.RELEASE.jar
+:000000 100644 0000000... c65358d... A	Projeto_Site/Receitas/WebContent/WEB-INF/lib/spring-core-3.0.6.RELEASE.jar
+:000000 100644 0000000... 4064858... A	Projeto_Site/Receitas/WebContent/WEB-INF/lib/spring-expression-3.0.6.RELEASE.jar
+:000000 100644 0000000... 761578b... A	Projeto_Site/Receitas/WebContent/WEB-INF/lib/spring-web-3.0.6.RELEASE.jar
+:000000 100644 0000000... 4f04197... A	Projeto_Site/Receitas/WebContent/WEB-INF/lib/spring-webmvc-3.0.6.RELEASE.jar
+:000000 100644 0000000... 60ec6eb... A	Projeto_Site/Receitas/WebContent/WEB-INF/spring-context.xml
+:000000 100644 0000000... 15adf29... A	Projeto_Site/Receitas/WebContent/WEB-INF/tags/campoData.tag
+:000000 100644 0000000... 9d38f45... A	Projeto_Site/Receitas/WebContent/WEB-INF/tags/popup.tag
+:000000 100644 0000000... ab8b824... A	Projeto_Site/Receitas/WebContent/WEB-INF/web.xml
+:000000 100644 0000000... 7f669d5... A	Projeto_Site/Receitas/WebContent/resources/bootstrap/css/bootstrap-responsive.css
+:000000 100644 0000000... dd134a1... A	Projeto_Site/Receitas/WebContent/resources/bootstrap/css/bootstrap-responsive.min.css
+:000000 100644 0000000... 4090804... A	Projeto_Site/Receitas/WebContent/resources/bootstrap/css/bootstrap.css
+:000000 100644 0000000... 1c75d0c... A	Projeto_Site/Receitas/WebContent/resources/bootstrap/css/bootstrap.min.css
+:000000 100644 0000000... 3bf6484... A	Projeto_Site/Receitas/WebContent/resources/bootstrap/img/glyphicons-halflings-white.png
+:000000 100644 0000000... 79bc568... A	Projeto_Site/Receitas/WebContent/resources/bootstrap/img/glyphicons-halflings.png
+:000000 100644 0000000... 45a3fc3... A	Projeto_Site/Receitas/WebContent/resources/bootstrap/js/bootstrap.js
+:000000 100644 0000000... 1f87730... A	Projeto_Site/Receitas/WebContent/resources/bootstrap/js/bootstrap.min.js
+:000000 100644 0000000... d5ecfa9... A	Projeto_Site/Receitas/WebContent/resources/bootstrap/js/popover.js
+:000000 100644 0000000... 577ead4... A	Projeto_Site/Receitas/WebContent/resources/bootstrap/js/tooltip.js
+:000000 100644 0000000... 2b887e7... A	Projeto_Site/Receitas/WebContent/resources/html/footer.jsp
+:000000 100644 0000000... c6b3fe7... A	Projeto_Site/Receitas/WebContent/resources/html/header.jsp
+:000000 100644 0000000... d45dd84... A	Projeto_Site/Receitas/WebContent/resources/img/background.jpg
+:000000 100644 0000000... 8a71ccd... A	Projeto_Site/Receitas/WebContent/resources/img/favicon.png
+:000000 100644 0000000... 51a94b8... A	Projeto_Site/Receitas/WebContent/resources/img/header.jpg
+:000000 100644 0000000... 04e988d... A	Projeto_Site/Receitas/WebContent/resources/img/java.png
+:000000 100644 0000000... f8358f5... A	Projeto_Site/Receitas/WebContent/resources/img/logo.png
+:000000 100644 0000000... 34f1086... A	Projeto_Site/Receitas/WebContent/resources/jquery/JQuery.js
+:000000 100644 0000000... ed22ffe... A	Projeto_Site/Receitas/WebContent/resources/jquery/JQueryUI.js
+:000000 100644 0000000... 71bf64a... A	Projeto_Site/Receitas/build/classes/br/com/ggdio/receitas/controller/IndexController.class
+:000000 100644 0000000... 829db5f... A	Projeto_Site/Receitas/src/main/java/br/com/ggdio/receitas/controller/IndexController.java
+:000000 100644 0000000... 3b0d81f... A	Projeto_Site/ReceitasBD/tabelas.txt
+
+[33mcommit 224980542957c97dd026fb41451d2265bc8fb37b[m
+Author: Guilherme Dio <ggrdio@gmail.com>
+Date:   Mon May 28 12:37:17 2012 -0700
+
+    Initial commit
+
+:000000 100644 0000000... 937573b... A	README.md
