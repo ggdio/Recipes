@@ -23,12 +23,14 @@ Tecnologias
 ===========
 
 Server-Side:
-_Java
-_Spring MVC
-_Hibernate Validator
-_Log4j
 
+    Java
+    Spring MVC
+    Hibernate Validator
+    Log4j
+    
 Client-Side:
-_Twitter Bootstrap
-_JQuery
-_Javascript
+
+    Twitter Bootstrap
+    JQuery
+    Javsacript
