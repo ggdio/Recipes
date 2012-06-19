@@ -3,18 +3,12 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tag" %>
 
 <!-- URL's -->
-<c:url value="/resources/bootstrap/js/bootstrap.min.js" var="bootstrap_js"/>
-<c:url value="/resources/jquery/JQuery.js" var="jquery"/>
 <c:url value="/resources/img/logo.png" var="logo"/>
 
 <!-- HEADER -->
 <c:import url="/resources/html/header.jsp">
 	<c:param value="Receitas - Home" name="title"/>
 </c:import>
-
-<!-- IMPORT SCRIPT -->
-<script type="text/javascript" src="${jquery}"></script>
-<script type="text/javascript" src="${bootstrap_js}"></script>
 
 <!-- ALERTA -->
 <div class="container">

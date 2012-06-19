@@ -2,7 +2,6 @@
 
 <!-- TAGLIB's -->
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <!-- ATRIBUTOS -->
 <%@ attribute name="id" required="true" %>
@@ -13,9 +12,8 @@
 <%@ attribute name="imagem" required="false" %>
 
 <!-- URL's -->
-<c:url value="/resources/bootstrap/js/bootstrap.min.js" var="bootstrap_js"/>
 <c:url value="/resources/jquery/JQuery.js" var="jquery"/>
-<c:url value="/resources/img/logo.png" var="icone" />
+<c:url value="/resources/bootstrap/js/bootstrap.js" var="bootstrap_js"/>
 
 <!-- IMPORT JQUERY+BOOTSTRAP -->
 <script type="text/javascript" src="${jquery}"></script>
@@ -23,7 +21,7 @@
 
 
 <!-- POPUP -->
-<div id="popup" class="modal hide fade">
+<div id="${id}" class="modal hide fade">
 	<div class="modal-header">
 		<button class="close" data-dismiss="modal">x</button>
 		<c:if test="${imagem != null}">
@@ -36,7 +34,7 @@
 	</div>
 	<div class="modal-footer">
 		<div class="pull-left">${rodape}</div>
-		<a id="btnVoltar" href="#" class="btn btn-success"><b>Voltar</b></a>
+		<a id="btnVoltar_${id}" href="#" class="btn btn-success"><b>Voltar</b></a>
 	</div>
 </div>
 
@@ -46,13 +44,13 @@
 	{
 		$('#${component}').click(function(event) 
 		{
-			$('#popup').modal('toggle');
-			$('#popup').modal('show');
+			$('#${id}').modal('toggle');
+			$('#${id}').modal('show');
 		});
 		
-		$('#btnVoltar').click(function(event) 
+		$('#btnVoltar_${id}').click(function(event) 
 		{
-			$('#popup').modal('hide');
+			$('#${id}').modal('hide');
 		});
 		
 	});

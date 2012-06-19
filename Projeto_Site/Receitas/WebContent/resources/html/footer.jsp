@@ -1,5 +1,6 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:url value="/resources/img/java.png" var="java"/>
+<br><br>
 <div class="navbar navbar-fixed-bottom">
 	    <div class="navbar-inner">
 		    <div style="color: white;" class="pull-right">
