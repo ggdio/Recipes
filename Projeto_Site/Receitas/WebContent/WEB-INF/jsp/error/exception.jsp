@@ -8,7 +8,7 @@
 
 <!-- HEADER -->
 <c:import url="/resources/html/header.jsp">
-	<c:param value="Receitas - Erro" name="title"/>
+	<c:param value="Espaço Receitas - Erro" name="title"/>
 </c:import>
 
 <!-- ALERTA -->

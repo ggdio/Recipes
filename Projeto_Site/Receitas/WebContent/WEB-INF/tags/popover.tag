@@ -10,6 +10,7 @@
 <%@ attribute name="titulo" required="true" %>
 <%@ attribute name="texto" required="true" %>
 <%@ attribute name="href" required="false" %>
+<%@ attribute name="position" required="false" description="top | bottom | right | left"%>
 
 <!-- URL's -->
 <c:url value="/resources/jquery/JQuery.js" var="jquery"/>
@@ -20,12 +21,22 @@
 <script type="text/javascript" src="${bootstrap_js}"></script>
 
 <!-- HTML -->
-<a id="${id}" data-original-title="${titulo}" href=${href == null ? "#" : href} data-content="${texto}" class="${classe}" rel="popover">${value}</a>
+<c:choose>
+	<c:when test="${href != null}">
+		<a id="${id}" data-original-title="${titulo}" href="${href}" data-content="${texto}" class="${classe}" rel="popover">${value}</a>
+	</c:when>
+	<c:otherwise>
+		<a id="${id}" data-original-title="${titulo}" data-content="${texto}" class="${classe}" rel="popover">${value}</a>
+	</c:otherwise>
+</c:choose>
 
 <!-- JAVASCRIPT -->
 <script type="text/javascript">
 	$(document).ready(function()
 	{
-		$("#${id}").popover();
+		var position = '${position}';
+		if(position == "")
+			position = 'right';
+		$('#${id}').popover({placement:position});
 	});
 </script>

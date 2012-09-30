@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class ErrorController 
 {
-	@RequestMapping("404")
+	@RequestMapping(value={"404","400"})
 	public String pageNotFound()
 	{
 		return "error/404";
 	}
 	
-	@RequestMapping("exception")
+	@RequestMapping(value={"exception","500"})
 	public String exception(Exception exception)
 	{
 		return "error/exception";

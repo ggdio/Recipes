@@ -1,71 +1,37 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tag" %>
+<c:import url="/resources/html/header.jsp"/>
+<c:url value="/upload/temp" var="urlUpload"/>
 
-<!-- URL's -->
-<c:url value="/resources/testes/carroA.jpg" var="a"/>
-<c:url value="/resources/testes/carroB.jpg" var="b"/>
-<c:url value="/resources/testes/carroC.jpg" var="c"/>
-<c:url value="/resources/testes/carroD.jpg" var="d"/>
-<c:url value="/resources/testes/carroE.jpg" var="e"/>
 
-<!-- HEADER -->
-<c:import url="/resources/html/header.jsp">
-	<c:param value="Receitas - Home" name="title"/>
-</c:import>
+<form id="formUploadImagem" method="post" accept-charset="utf-8" enctype="multipart/form-data" action="${urlUpload}">
+	<input name="arquivo" id="arquivo" size="27" type="file" /><br />
+	<input type="submit" name="action" value="Upload" /><br />
+	<iframe id="uploadTarget" name="uploadTarget" src="" style="width:0;height:0;border:0px solid #fff;"></iframe>
+</form>
 
-<!-- SLIDES -->
-<div id="carrossel" class="carousel span7">
-	<!-- ITEMS -->
-	<div class="carousel-inner">
-		<div class="item active">
-			<img src="${a}" width="100%" height="345"/>
-			<div class="carousel-caption">
-				<h4>Titulo</h4>
-				<p>Texto Texto Texto</p>
-			</div>
-		</div>
-		<div class="item">
-			<img src="${b}" width="100%" height="345"/>
-			<div class="carousel-caption">
-				<h4>Titulo</h4>
-				<p>Texto Texto Texto</p>
-			</div>
-		</div> 
-		<div class="item">
-			<img src="${c}" width="100%" height="345"/>
-			<div class="carousel-caption">
-				<h4>Titulo</h4>
-				<p>Texto Texto Texto</p>
-			</div>
-		</div> 
-		<div class="item">
-			<img src="${d}" width="100%" height="345"/>
-			<div class="carousel-caption">
-				<h4>Titulo</h4>
-				<p>Texto Texto Texto</p>
-			</div>
-		</div>
-		<div class="item">
-			<img src="${e}" width="100%" height="345"/>
-			<div class="carousel-caption">
-				<h4>Titulo</h4>
-				<p>Texto Texto Texto</p>
-			</div>
-		</div> 
-	</div>
-	<!-- SETAS DE NAVEGAÇÃO -->
-	<a class="carousel-control left" href="#carrossel" data-slide="prev">&lsaquo;</a>
-	<a class="carousel-control right" href="#carrossel" data-slide="next">&rsaquo;</a>
-</div>
-
-    
-<script type="text/javascript">
-	$(document).ready(function()
-	{
-		$("#carrossel").carousel({interval:2000});
-	});
-</script>
+<script>
+function init() 
+{
+	document.getElementById('formUploadImagem').onsubmit = onSubmit;
+	document.getElementById("uploadTarget").onload = uploadDone;
+}
+function onSubmit()
+{
+	document.getElementById('formUploadImagem').target = 'uploadTarget'; //'upload_target' is the name of the iframe
+}
+function uploadDone()
+{
+	var ret = frames['uploadTarget'].document.getElementsByTagName("body")[0].innerHTML;
+	var data = eval("("+ret+")");
+	alert("Status: "+data.response.status);
+	alert("Mensagem: "+data.response.mensagem);
+	alert("Response: "+data.response.informacao.caminhoWeb);
+	alert("Response: "+data.response.informacao.caminhoReal);
+}
+window.onload = init;
+</script>    
 
 <!-- FOOTER -->
 <c:import url="/resources/html/footer.jsp"/>

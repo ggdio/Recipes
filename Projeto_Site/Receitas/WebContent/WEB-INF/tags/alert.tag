@@ -11,6 +11,8 @@
 <%@ attribute name="align" required="false" %>
 <%@ attribute name="width" required="false" %>
 <%@ attribute name="height" required="false" %>
+<%@ attribute name="hidden" required="false" %>
+<%@ attribute name="classe" required="false" %>
 
 <!-- URL's -->
 <c:url value="/resources/jquery/JQuery.js" var="jquery"/>
@@ -21,10 +23,12 @@
 <script type="text/javascript" src="${bootstrap_js}"></script>
 
 <!-- HTML -->
-<div id="${id}" class="alert ${tipo} fade in" style="width: ${width};height: ${height};" align="${align}">
-  <button type="button" class="close" data-dismiss="alert">×</button>
-  <strong>${titulo}</strong>
-  <p>${texto}</p>
+<div align="${align}">
+	<div id="${id}" class="alert ${tipo} fade in ${classe}" style="width: ${width};height: ${height};" ${hidden}>
+	  <button type="button" class="close" data-dismiss="alert">×</button>
+	  <strong>${titulo}</strong>
+	  <p>${texto}</p>
+	</div>
 </div>
 
 <!-- JAVASCRIPT -->

@@ -6,8 +6,9 @@
 <!-- ATRIBUTOS -->
 <%@ attribute name="id" required="false" %>
 <%@ attribute name="dados" required="true" type="java.util.List" %>
+<%@ attribute name="converter" required="true" type="br.com.ggdio.receitas.converter.Converter" %>
 <%@ attribute name="name" required="false" %>
-<%@ attribute name="span" required="false" %>
+<%@ attribute name="selecionado" required="false" type="java.lang.String" %>
 
 <!-- URL's -->
 <c:url value="/resources/jquery/JQuery.js" var="jquery"/>
@@ -19,9 +20,9 @@
 
 <!-- COMBOBOX HTML -->
 <select id="${id}" class="combobox" name="${name}">
-	<option></option>
+	<option selected="selected">${selecionado}</option>
 	<c:forEach items="${dados}" var="dado">
-		<option>${dado}</option>
+		<option>${converter.convertTo(dado)}</option>
 	</c:forEach>
 </select>
 

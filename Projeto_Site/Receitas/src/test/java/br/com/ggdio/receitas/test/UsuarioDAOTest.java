@@ -8,7 +8,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 import br.com.ggdio.projectutils.dao.Dao;
-import br.com.ggdio.projectutils.seguranca.Criptografia;
+import br.com.ggdio.projectutils.seguranca.GeradorCriptografia;
 import br.com.ggdio.receitas.dao.UsuarioDAO;
 import br.com.ggdio.receitas.model.Usuario;
 
@@ -116,7 +116,7 @@ public class UsuarioDAOTest
 	@Test
 	public void testUpdateSenhaUsuario()
 	{
-		String senha = new Criptografia().gerarHash("senhaNova");
+		String senha = new GeradorCriptografia().encriptaMD5("Senha");
 		Usuario usuario = this.dao.get(1);
 		usuario.setSenha(senha);
 		this.dao.altera(usuario);
@@ -129,7 +129,7 @@ public class UsuarioDAOTest
 		Usuario usuario = new Usuario();
 		usuario.setNome("UsuárioParaDeletar ABC 123 ABC 123");
 		usuario.setLogin("login");
-		usuario.setSenha(new Criptografia().gerarHash("senha"));
+		usuario.setSenha(new GeradorCriptografia().encriptaMD5("Senha"));
 		usuario.setStatus(true);
 		usuario.setUltimoAcesso(Calendar.getInstance());
 		usuario.setAdmin(false);

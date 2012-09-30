@@ -22,7 +22,7 @@ public class ReceitaDAO extends Dao<Receita>
 	@Override
 	public void adiciona(Receita receita) 
 	{
-		String sql = "INSERT INTO tbl_receita VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO tbl_receita VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		this.conexao = ConnectionFactory.getConexao();
 		try
 		{
@@ -39,7 +39,8 @@ public class ReceitaDAO extends Dao<Receita>
 			insert.setString(9,receita.getImagem());
 			insert.setLong(10, receita.getAutor().getCodigo());
 			insert.setString(11,receita.getTags(";"));
-			insert.setDate(12, new TransformaData("dd/MM/yyyy kk:mm:ss").getSqlDate(receita.getData()));
+			insert.setTimestamp(12, new TransformaData("dd/MM/yyyy kk:mm:ss").getTimestamp(receita.getData()));
+			insert.setLong(13, receita.getVisualizacoes());
 			insert.executeUpdate();
 			
 			//Recupera ID
@@ -73,7 +74,8 @@ public class ReceitaDAO extends Dao<Receita>
 		sql.append("imagem = ?,");
 		sql.append("autor = ?,");
 		sql.append("tags = ?,");
-		sql.append("data = ? ");
+		sql.append("data = ?,");
+		sql.append("visualizacoes = ? ");
 		sql.append("WHERE codigo = ?");
 		this.conexao = ConnectionFactory.getConexao();
 		try
@@ -90,8 +92,9 @@ public class ReceitaDAO extends Dao<Receita>
 			update.setString(8,receita.getImagem());
 			update.setLong(9, receita.getAutor().getCodigo());
 			update.setString(10,receita.getTags(";"));
-			update.setDate(11, new TransformaData("dd/MM/yyyy kk:mm:ss").getSqlDate(receita.getData()));
-			update.setLong(12, receita.getCodigo());
+			update.setTimestamp(11, new TransformaData("dd/MM/yyyy kk:mm:ss").getTimestamp(receita.getData()));
+			update.setLong(12, receita.getVisualizacoes());
+			update.setLong(13, receita.getCodigo());
 			update.executeUpdate();
 			
 			//Finaliza
@@ -132,7 +135,6 @@ public class ReceitaDAO extends Dao<Receita>
 			throw new RuntimeException(e);
 		}
 	}
-
 
 	@Override
 	public List<Receita> getLista() 
@@ -217,29 +219,141 @@ public class ReceitaDAO extends Dao<Receita>
 		}
 	}
 	
+	public List<Receita> getMaisRecentes()
+	{
+		String sql = "SELECT * FROM tbl_receita ORDER BY data DESC";
+		this.conexao = ConnectionFactory.getConexao();
+		try
+		{
+			//Prepara o statement
+			Statement select = this.conexao.createStatement();
+			ResultSet retorno = select.executeQuery(sql);
+			
+			//Carrega dados
+			List<Receita> receitas = carregaReceitas(retorno);
+			
+			//Fianliza
+			retorno.close();
+			select.close();
+			this.conexao.close();
+			
+			//Retorna
+			return receitas;
+		}
+		catch(SQLException e)
+		{
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public List<Receita> getMaisRecentes(int limite)
+	{
+		String sql = "SELECT * FROM tbl_receita ORDER BY data DESC LIMIT "+limite;
+		this.conexao = ConnectionFactory.getConexao();
+		try
+		{
+			//Prepara o statement
+			Statement select = this.conexao.createStatement();
+			ResultSet retorno = select.executeQuery(sql);
+			
+			//Carrega dados
+			List<Receita> receitas = carregaReceitas(retorno);
+			
+			//Fianliza
+			retorno.close();
+			select.close();
+			this.conexao.close();
+			
+			//Retorna
+			return receitas;
+		}
+		catch(SQLException e)
+		{
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public List<Receita> getMaisVisualizadas(int limite)
+	{
+		String sql = "SELECT * FROM tbl_receita WHERE visualizacoes > 0 ORDER BY visualizacoes DESC LIMIT "+limite;
+		this.conexao = ConnectionFactory.getConexao();
+		try
+		{
+			//Prepara o statement
+			Statement select = this.conexao.createStatement();
+			ResultSet retorno = select.executeQuery(sql);
+			
+			//Carrega dados
+			List<Receita> receitas = carregaReceitas(retorno);
+			
+			//Fianliza
+			retorno.close();
+			select.close();
+			this.conexao.close();
+			
+			//Retorna
+			return receitas;
+		}
+		catch(SQLException e)
+		{
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public List<Receita> pesquisaPorTag(String busca)
+	{
+		String sql = "SELECT *,MATCH(titulo,tags) AGAINST(?) AS compatibilidade FROM tbl_receita "
+				   + "WHERE MATCH(titulo,tags) AGAINST(?) ORDER BY(compatibilidade) DESC LIMIT 50";
+		this.conexao = ConnectionFactory.getConexao();
+		try
+		{
+			//Prepara o statement
+			PreparedStatement select = this.conexao.prepareStatement(sql);
+			select.setString(1, busca);
+			select.setString(2, busca);
+			ResultSet retorno = select.executeQuery();
+			
+			//Carrega dados
+			List<Receita> receitas = carregaReceitas(retorno);
+			
+			//Fianliza
+			retorno.close();
+			select.close();
+			this.conexao.close();
+			
+			//Retorna
+			return receitas;
+		}
+		catch(SQLException e)
+		{
+			throw new RuntimeException(e);
+		}
+	}
+	
 	private Receita carregaReceita(ResultSet retorno) throws SQLException
 	{
-		Receita receita = new Receita(new Usuario(), Calendar.getInstance());
 		if(retorno.next())
 		{
 			//Dados imutáveis
 			Usuario autor = new UsuarioDAO().get(retorno.getInt("autor"));
-			Calendar data = new TransformaData("dd/MM/yyyy kk:mm:ss").getCalendar(retorno.getDate("data"));
+			Calendar data = new TransformaData("dd/MM/yyyy kk:mm:ss").getCalendar(retorno.getTimestamp("data"));
 			
 			//Monta o objeto
-			receita = new Receita(autor, data);
-			receita.setCodigo(retorno.getLong("codigo"));
-			receita.setTitulo(retorno.getString("titulo"));
-			receita.setDescricao(retorno.getString("descricao"));
-			receita.setIngredientes(retorno.getString("ingredientes"), ";");
-			receita.setCategoria(new CategoriaDAO().get(retorno.getInt("categoria")));
-			receita.setPreparo(retorno.getString("preparo"));
-			receita.setRendimento(retorno.getInt("rendimento"));
-			receita.setTempo(retorno.getInt("rendimento"));
-			receita.setImagem(retorno.getString("imagem"));
-			receita.setTags(retorno.getString("tags"), ";");
+			Receita receita = new Receita(autor, data);
+			receita.setCodigo(retorno.getLong(Receita.CAMPO_CODIGO));
+			receita.setTitulo(retorno.getString(Receita.CAMPO_TITULO));
+			receita.setDescricao(retorno.getString(Receita.CAMPO_DESCRICAO));
+			receita.setIngredientes(retorno.getString(Receita.CAMPO_INGREDIENTES), ";");
+			receita.setCategoria(new CategoriaDAO().get(retorno.getInt(Receita.CAMPO_CATEGORIA)));
+			receita.setPreparo(retorno.getString(Receita.CAMPO_PREPARO));
+			receita.setRendimento(retorno.getInt(Receita.CAMPO_RENDIMENTO));
+			receita.setTempo(retorno.getInt(Receita.CAMPO_TEMPO));
+			receita.setImagem(retorno.getString(Receita.CAMPO_IMAGEM));
+			receita.setTags(retorno.getString(Receita.CAMPO_TAGS), ";");
+			receita.setVisualizacoes(retorno.getLong(Receita.CAMPO_VISUALIZACOES));
+			return receita;
 		}
-		return receita;
+		return null;
 	}
 	
 	private List<Receita> carregaReceitas(ResultSet retorno) throws SQLException
@@ -249,20 +363,21 @@ public class ReceitaDAO extends Dao<Receita>
 		{
 			//Dados imutáveis
 			Usuario autor = new UsuarioDAO().get(retorno.getInt("autor"));
-			Calendar data = new TransformaData("dd/MM/yyyy kk:mm:ss").getCalendar(retorno.getDate("data"));
+			Calendar data = new TransformaData("dd/MM/yyyy kk:mm:ss").getCalendar(retorno.getTimestamp("data"));
 			
 			//Monta o objeto
 			Receita receita = new Receita(autor, data);
-			receita.setCodigo(retorno.getLong("codigo"));
-			receita.setTitulo(retorno.getString("titulo"));
-			receita.setDescricao(retorno.getString("descricao"));
-			receita.setIngredientes(retorno.getString("ingredientes"), ";");
-			receita.setCategoria(new CategoriaDAO().get(retorno.getInt("categoria")));
-			receita.setPreparo(retorno.getString("preparo"));
-			receita.setRendimento(retorno.getInt("rendimento"));
-			receita.setTempo(retorno.getInt("rendimento"));
-			receita.setImagem(retorno.getString("imagem"));
-			receita.setTags(retorno.getString("tags"), ";");
+			receita.setCodigo(retorno.getLong(Receita.CAMPO_CODIGO));
+			receita.setTitulo(retorno.getString(Receita.CAMPO_TITULO));
+			receita.setDescricao(retorno.getString(Receita.CAMPO_DESCRICAO));
+			receita.setIngredientes(retorno.getString(Receita.CAMPO_INGREDIENTES), ";");
+			receita.setCategoria(new CategoriaDAO().get(retorno.getInt(Receita.CAMPO_CATEGORIA)));
+			receita.setPreparo(retorno.getString(Receita.CAMPO_PREPARO));
+			receita.setRendimento(retorno.getInt(Receita.CAMPO_RENDIMENTO));
+			receita.setTempo(retorno.getInt(Receita.CAMPO_TEMPO));
+			receita.setImagem(retorno.getString(Receita.CAMPO_IMAGEM));
+			receita.setTags(retorno.getString(Receita.CAMPO_TAGS), ";");
+			receita.setVisualizacoes(retorno.getLong(Receita.CAMPO_VISUALIZACOES));
 			receitas.add(receita);
 		}
 		return receitas;

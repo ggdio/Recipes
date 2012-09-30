@@ -30,7 +30,7 @@ public class UsuarioDAO extends Dao<Usuario>
 			insert.setString(2, usuario.getNome());
 			insert.setString(3, usuario.getLogin());
 			insert.setString(4, usuario.getSenha());
-			insert.setBoolean(5, usuario.getStatus());
+			insert.setBoolean(5, usuario.isAtivo());
 			insert.setDate(6, new TransformaData("dd/MM/yyyy kk:mm:ss").getSqlDate(usuario.getUltimoAcesso()));
 			insert.setBoolean(7, usuario.isAdmin());
 			insert.executeUpdate();
@@ -71,7 +71,7 @@ public class UsuarioDAO extends Dao<Usuario>
 			update.setString(1,usuario.getNome());
 			update.setString(2,usuario.getLogin());
 			update.setString(3,usuario.getSenha());
-			update.setBoolean(4,usuario.getStatus());
+			update.setBoolean(4,usuario.isAtivo());
 			update.setDate(5,new TransformaData("dd/MM/yyyy kk:mm:ss").getSqlDate(usuario.getUltimoAcesso()));
 			update.setBoolean(6, usuario.isAdmin());
 			update.setLong(7, usuario.getCodigo());
@@ -97,6 +97,35 @@ public class UsuarioDAO extends Dao<Usuario>
 			//Prepara o statement
 			PreparedStatement select = this.conexao.prepareStatement(sql);
 			select.setInt(1, codigo);
+			ResultSet retorno = select.executeQuery();
+			
+			//Carrega dados
+			Usuario usuario = carregaUsuario(retorno);
+			
+			//Finaliza
+			retorno.close();
+			select.close();
+			this.conexao.close();
+			
+			return usuario;
+		}
+		catch(SQLException e)
+		{
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public Usuario get(String login,String senha,boolean status) 
+	{
+		String sql = "SELECT * FROM tbl_usuario WHERE login = ? AND senha = ? AND status = ?";
+		this.conexao = ConnectionFactory.getConexao();
+		try
+		{
+			//Prepara o statement
+			PreparedStatement select = this.conexao.prepareStatement(sql);
+			select.setString(1, login);
+			select.setString(2, senha);
+			select.setBoolean(3, status);
 			ResultSet retorno = select.executeQuery();
 			
 			//Carrega dados
@@ -199,9 +228,9 @@ public class UsuarioDAO extends Dao<Usuario>
 	
 	private Usuario carregaUsuario(ResultSet retorno) throws SQLException
 	{
-		Usuario usuario = new Usuario();
 		if(retorno.next())
 		{
+			Usuario usuario = new Usuario();
 			usuario.setCodigo(retorno.getLong("codigo"));
 			usuario.setNome(retorno.getString("nome"));
 			usuario.setLogin(retorno.getString("login"));
@@ -209,8 +238,9 @@ public class UsuarioDAO extends Dao<Usuario>
 			usuario.setStatus(retorno.getBoolean("status"));
 			usuario.setUltimoAcesso(new TransformaData("dd/MM/yyyy kk:mm:ss").getCalendar(retorno.getDate("ultimoAcesso")));
 			usuario.setAdmin(retorno.getBoolean("admin"));
+			return usuario;
 		}
-		return usuario;
+		return null;
 	}
 	
 	private List<Usuario> carregaUsuarios(ResultSet retorno) throws SQLException

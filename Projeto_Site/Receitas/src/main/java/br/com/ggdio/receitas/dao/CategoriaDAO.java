@@ -20,7 +20,7 @@ public class CategoriaDAO extends Dao<Categoria>
 	@Override
 	public void adiciona(Categoria categoria) 
 	{
-		String sql = "INSERT INTO tbl_categoria VALUES (?,?,?)";
+		String sql = "INSERT INTO tbl_categoria VALUES (?,?,?,?)";
 		this.conexao = ConnectionFactory.getConexao();
 		try 
 		{
@@ -29,6 +29,7 @@ public class CategoriaDAO extends Dao<Categoria>
 			insert.setObject(1, null);
 			insert.setString(2, categoria.getTipo());
 			insert.setString(3, categoria.getDescricao());
+			insert.setString(4, categoria.getImagem());
 			insert.executeUpdate();
 			
 			//Recupera o ID gerado
@@ -54,7 +55,8 @@ public class CategoriaDAO extends Dao<Categoria>
 		StringBuilder sql = new StringBuilder();
 		sql.append("UPDATE tbl_categoria SET ");
 		sql.append("tipo = ?,");
-		sql.append("descricao = ? ");
+		sql.append("descricao = ?,");
+		sql.append("imagem = ? ");
 		sql.append("WHERE codigo = ?");
 		this.conexao = ConnectionFactory.getConexao();
 		try
@@ -64,6 +66,7 @@ public class CategoriaDAO extends Dao<Categoria>
 			update.setString(1, categoria.getTipo());
 			update.setString(2, categoria.getDescricao());
 			update.setLong(3, categoria.getCodigo());
+			update.setString(4, categoria.getImagem());
 			update.executeUpdate();
 			
 			//Finaliza
@@ -193,9 +196,10 @@ public class CategoriaDAO extends Dao<Categoria>
 		Categoria categoria = new Categoria();
 		if(retorno.next())
 		{
-			categoria.setCodigo(retorno.getLong("codigo"));
-			categoria.setTipo(retorno.getString("tipo"));
-			categoria.setDescricao(retorno.getString("descricao"));
+			categoria.setCodigo(retorno.getLong(Categoria.CAMPO_CODIGO));
+			categoria.setTipo(retorno.getString(Categoria.CAMPO_TIPO));
+			categoria.setDescricao(retorno.getString(Categoria.CAMPO_DESCRICAO));
+			categoria.setImagem(retorno.getString(Categoria.CAMPO_IMAGEM));
 		}
 		return categoria;
 	}
@@ -206,9 +210,10 @@ public class CategoriaDAO extends Dao<Categoria>
 		while(retorno.next())
 		{
 			Categoria categoria = new Categoria();
-			categoria.setCodigo(retorno.getLong("codigo"));
-			categoria.setTipo(retorno.getString("tipo"));
-			categoria.setDescricao(retorno.getString("descricao"));
+			categoria.setCodigo(retorno.getLong(Categoria.CAMPO_CODIGO));
+			categoria.setTipo(retorno.getString(Categoria.CAMPO_TIPO));
+			categoria.setDescricao(retorno.getString(Categoria.CAMPO_DESCRICAO));
+			categoria.setImagem(retorno.getString(Categoria.CAMPO_IMAGEM));
 			categorias.add(categoria);
 		}
 		return categorias;

@@ -6,7 +6,8 @@ import java.sql.SQLException;
 
 public final class ConnectionFactory 
 {
-	private static final String URL = "jdbc:mysql://localhost:3306/receitas";
+	private static final String URL = "jdbc:mysql://127.10.12.1:3306/receitas";
+//	private static final String URL = "jdbc:mysql://localhost:3306/receitas";
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
 	private static final String USUARIO = "receitas_web";
 	private static final String SENHA = "receitas@satiecer";

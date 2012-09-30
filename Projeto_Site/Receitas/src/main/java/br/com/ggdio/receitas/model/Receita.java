@@ -17,8 +17,23 @@ public class Receita
 	private int tempo;
 	private String imagem;
 	private final Usuario autor;
-	private final Calendar data;
 	private List<String> tags;
+	private final Calendar data;
+	private long visualizacoes;
+	
+	public static final String CAMPO_CODIGO = "codigo";
+	public static final String CAMPO_TITULO = "titulo";
+	public static final String CAMPO_DESCRICAO = "descricao";
+	public static final String CAMPO_INGREDIENTES = "ingredientes";
+	public static final String CAMPO_CATEGORIA = "categoria";
+	public static final String CAMPO_PREPARO = "preparo";
+	public static final String CAMPO_RENDIMENTO = "rendimento";
+	public static final String CAMPO_TEMPO = "tempo";
+	public static final String CAMPO_IMAGEM = "imagem";
+	public static final String CAMPO_AUTOR = "autor";
+	public static final String CAMPO_TAGS = "tags";
+	public static final String CAMPO_DATA = "data";
+	public static final String CAMPO_VISUALIZACOES = "visualizacoes";
 	
 	public Receita(Usuario autor,Calendar data)
 	{
@@ -46,6 +61,11 @@ public class Receita
 		}
 		return false;
 	}
+	
+	public void incrementaVisualizacao()
+	{
+		this.visualizacoes++;
+	}
 
 	public long getCodigo() 
 	{
@@ -64,11 +84,13 @@ public class Receita
 	
 	public String getIngredientes(String separador)
 	{
+		if(this.ingredientes.size() == 0) return "";
 		StringBuilder builder = new StringBuilder();
-		for(String ingrediente : this.ingredientes)
+		builder.append(this.ingredientes.get(0));
+		for(int aux = 1;aux < this.ingredientes.size();aux++)
 		{
-			builder.append(ingrediente);
 			builder.append(separador);
+			builder.append(ingredientes.get(aux));
 		}
 		return builder.toString();
 	}
@@ -120,22 +142,28 @@ public class Receita
 	
 	public String getTags(String separador)
 	{
+		if(this.tags.size() == 0) return "";
 		StringBuilder builder = new StringBuilder();
-		for(String tag : this.tags)
+		builder.append(this.tags.get(0));
+		for(int aux = 1;aux < this.tags.size();aux++)
 		{
-			builder.append(tag);
 			builder.append(separador);
+			builder.append(tags.get(aux));
 		}
 		return builder.toString();
 	}
-
+	
+	public long getVisualizacoes() 
+	{
+		return visualizacoes;
+	}
 	public void setCodigo(long codigo)
 	{
 		this.codigo = codigo;
 	}
 
 	public void setTitulo(String titulo)
-{
+	{
 		this.titulo = titulo;
 	}
 
@@ -146,7 +174,8 @@ public class Receita
 	
 	public void setIngredientes(String ingredientes,String separador) 
 	{
-		this.ingredientes = Arrays.asList(ingredientes.split(separador));
+		if(!ingredientes.isEmpty())
+			this.ingredientes = Arrays.asList(ingredientes.split(separador));
 	}
 
 	public void setCategoria(Categoria categoria)
@@ -186,7 +215,12 @@ public class Receita
 	
 	public void setTags(String tags,String separador) 
 	{
-		this.tags = Arrays.asList(tags.split(separador));
+		if(!tags.isEmpty())
+			this.tags = Arrays.asList(tags.split(separador));
+	}
+	public void setVisualizacoes(long visualizacoes)
+	{
+		this.visualizacoes = visualizacoes;
 	}
 
 }

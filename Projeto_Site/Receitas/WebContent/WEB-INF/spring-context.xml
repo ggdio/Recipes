@@ -10,11 +10,57 @@
 						http://www.springframework.org/schema/context 
 						http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
+	<!-- Base de Pacotes -->
 	<context:component-scan base-package="br.com.ggdio.receitas" />
+	
+	<!-- Habilita Annotations -->
 	<mvc:annotation-driven />
+	
+	<!-- Pasta de Resources -->
 	<mvc:resources location="/resources/" mapping="/resources/**"/>
+	
+	<!-- Handler do Spring de Views -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/jsp/"/>
 		<property name="suffix" value=".jsp"/>
 	</bean>
+	
+	<!-- Handler de Upload -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="10000000" />
+	</bean>
+	
+	<bean id="testes" class="br.com.ggdio.receitas.util.ContextoSistema" autowire-candidate="true" />
+	
+	<!-- Tarefa Quartz -->
+	<bean id="limpaPastaUpload" class="br.com.ggdio.receitas.tarefa.TarefaLimpaPastaUpload" />
+	
+	<!-- Configuração da Tarefa -->
+	<bean id="limpaPastaUploadConfig" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="limpaPastaUpload"/>
+		<property name="targetMethod" value="executeJob"/>
+		<property name="concurrent" value="false" />
+	</bean>
+	
+	<!-- Trigger da Tarefa -->
+	<bean id="limpaPastaUploadTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="limpaPastaUploadConfig" />
+		<property name="startDelay" value="1800000" />
+		<property name="repeatInterval" value="3600000" />
+	</bean>
+	
+	<!-- Contrução da Tarefa -->
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="limpaPastaUploadTrigger" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Login Interceptor -->
+	<mvc:interceptors>
+		<bean class="br.com.ggdio.receitas.interceptor.LoginInterceptor"/>
+	</mvc:interceptors>
+	
 </beans>

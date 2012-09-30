@@ -10,6 +10,7 @@
 <%@ attribute name="texto" required="false" %>
 <%@ attribute name="rodape" required="false" %>
 <%@ attribute name="imagem" required="false" %>
+<%@ attribute name="retornar" required="false" description="Exibir botão de retorno(valor = 'retornar')" %>
 
 <!-- URL's -->
 <c:url value="/resources/jquery/JQuery.js" var="jquery"/>
@@ -32,10 +33,14 @@
 	<div class="modal-body">
 		<p>${texto}</p>
 	</div>
+	
 	<div class="modal-footer">
-		<div class="pull-left">${rodape}</div>
-		<a id="btnVoltar_${id}" href="#" class="btn btn-success"><b>Voltar</b></a>
+		<c:if test="${retornar == 'retornar'}">
+			<div class="pull-left">${rodape}</div>
+			<a id="btnVoltar_${id}" href="#" class="btn btn-success"><b>Voltar</b></a>
+		</c:if>
 	</div>
+	
 </div>
 
 <!-- SCRIPT -->

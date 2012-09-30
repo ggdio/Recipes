@@ -12,6 +12,14 @@ public class Usuario implements Cloneable
 	private Calendar ultimoAcesso;
 	private Boolean admin;
 	
+	public static final String CAMPO_CODIGO = "codigo";
+	public static final String CAMPO_NOME = "nome";
+	public static final String CAMPO_LOGIN = "login";
+	public static final String CAMPO_SENHA = "senha";
+	public static final String CAMPO_STATUS = "status";
+	public static final String CAMPO_ULTIMO_ACESSO = "ultimoAcesso";
+	public static final String CAMPO_ADMIN = "admin";
+	
 	@Override
 	public boolean equals(Object obj) 
 	{
@@ -20,7 +28,7 @@ public class Usuario implements Cloneable
 			Usuario usuario = (Usuario) obj;
 			if(usuario.getCodigo() == this.codigo && usuario.getNome().equals(this.nome) &&
 			   usuario.getLogin().equals(this.login) && usuario.getSenha().equals(this.senha) &&
-			   usuario.getStatus() == this.status && usuario.getUltimoAcesso().equals(this.ultimoAcesso) &&
+			   usuario.isAtivo() == this.status && usuario.getUltimoAcesso().equals(this.ultimoAcesso) &&
 			   usuario.isAdmin() == this.admin)
 			{
 				return true;
@@ -58,7 +66,7 @@ public class Usuario implements Cloneable
 	{
 		return senha;
 	}
-	public Boolean getStatus() 
+	public Boolean isAtivo() 
 	{
 		return status;
 	}
