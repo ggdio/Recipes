@@ -18,3 +18,19 @@ Categorias:
     Biscoitos
 
 Dentre diversos outros tipos...
+
+Tecnologias
+===========
+
+Server-Side:
+
+    Java
+    Spring MVC
+    Hibernate Validator
+    Log4j
+    
+Client-Side:
+
+    Twitter Bootstrap
+    JQuery
+    Javsacript
